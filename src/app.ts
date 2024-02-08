@@ -23,6 +23,18 @@ server.post('/ave', (req, res) => {
     res.json(["A nova ave do zoológico é: ", ave]);
 });
 
+// server.post('/animal', (req, res) => {
+//     if(req.body && 'raca' in req.body) {
+//         // do something
+//     } else if(req.body && 'envergadura' in req.body) {
+//         // do something
+//     } else if(req.body && 'tipo_de_escamas' in req.body) {
+//         // do something
+//     } else {
+//         console.log('Algo errado não está certo.');
+//     }
+// });
+
 server.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
 })
