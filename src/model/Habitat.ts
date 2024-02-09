@@ -1,17 +1,33 @@
 import { Animal } from "./Animal";
 
+/**
+ * Representa um habitat no zoológico, onde os animais vivem.
+ */
 export class Habitat {
 
+    /**
+     * O nome do habitat.
+     */
     private nome: string;
+
+    /**
+     * A lista de animais que habitam este habitat.
+     */
     private listaAnimais: Array<Animal>;
 
+    /**
+     * Cria uma nova instância de Habitat.
+     * 
+     * @param _nome O nome do habitat.
+     * @param _listaAnimais A lista de animais que habitam o habitat.
+     */
     constructor(_nome: string, _listaAnimais: Array<Animal>) {
         this.nome = _nome;
         this.listaAnimais = _listaAnimais;
     }
 
     /**
-     * Retorna o nome do habitat.
+     * Obtém o nome do habitat.
      * 
      * @returns O nome do habitat.
      */
@@ -29,7 +45,7 @@ export class Habitat {
     }
 
     /**
-     * Retorna a lista de animais do habitat.
+     * Obtém a lista de animais do habitat.
      * 
      * @returns A lista de animais do habitat.
      */
