@@ -47,7 +47,6 @@ server.post('/new/reptil', async (req, res) => {
     const { nome, idade, genero, tipo_de_escamas } = req.body;
 
     const novoReptil = new Reptil(nome, idade, genero, tipo_de_escamas);
-    console.log('pronto para chamar a função do banco');
 
     const result = await Reptil.cadastrarReptil(novoReptil);
 

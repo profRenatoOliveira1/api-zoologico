@@ -67,7 +67,6 @@ export class Reptil extends Animal {
     }
 
     static async cadastrarReptil(reptil: Reptil): Promise<any> {
-        console.log('Começando o cadastro');
         try {
             let insertResult = false;
             await database.query(`INSERT INTO reptil (nome, idade, genero, tipo_de_escamas)
@@ -78,10 +77,8 @@ export class Reptil extends Animal {
                     insertResult = true;
                 }
             });
-            console.log('retornando a função');
             return insertResult;
         } catch(error) {
-            console.log('algo errado não está certo');
             return error;
         }
     }
