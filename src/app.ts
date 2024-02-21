@@ -37,10 +37,20 @@ server.post('/zoologico', (req, res) => {
     res.status(200).json('Zoológico criado');
 });
 
-server.get('/reptil', async (req, res) => {
+server.get('/list/reptil', async (req, res) => {
     const repteis = await Reptil.listarRepteis();
 
     res.status(200).json(repteis);
+})
+
+server.post('/new/reptil', async (req, res) => {
+    const { nome, idade, genero, tipo_de_escamas } = req.body;
+
+    const novoReptil = new Reptil(nome, idade, genero, tipo_de_escamas);
+    console.log('pronto para chamar a função do banco');
+
+    await Reptil.cadastrarReptil(novoReptil);
+
 })
 
 new DatabaseModel().testeConexao().then((resbd) => {
