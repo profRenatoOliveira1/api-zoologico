@@ -3,6 +3,8 @@ import cors from "cors";
 import { Habitat } from "./model/Habitat";
 import { Atracao } from "./model/Atracao";
 import { Zoologico } from "./model/Zoologico";
+import { DatabaseModel } from "./model/DatabaseModel";
+import { Reptil } from "./model/Reptil";
 
 const server = express();
 const port: number = 3000;
@@ -35,6 +37,18 @@ server.post('/zoologico', (req, res) => {
     res.status(200).json('Zoológico criado');
 });
 
-server.listen(port, () => {
-    console.log(`Servidor rodando em http://localhost:${port}`);
+server.get('/reptil', async (req, res) => {
+    const repteis = await Reptil.listarRepteis();
+
+    res.status(200).json(repteis);
+})
+
+new DatabaseModel().testeConexao().then((resbd) => {
+    if(resbd) {
+        server.listen(port, () => {
+            console.log(`Servidor rodando em http://localhost:${port}`);
+        })
+    } else {
+        console.log('Não foi possível conectar ao banco de dados');
+    }
 })
