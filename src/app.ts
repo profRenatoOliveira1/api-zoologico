@@ -49,8 +49,14 @@ server.post('/new/reptil', async (req, res) => {
     const novoReptil = new Reptil(nome, idade, genero, tipo_de_escamas);
     console.log('pronto para chamar a função do banco');
 
-    await Reptil.cadastrarReptil(novoReptil);
+    const result = await Reptil.cadastrarReptil(novoReptil);
 
+    if(result) {
+        return res.status(200).json('Reptil cadastrado com sucesso');
+    } else {
+        return res.status(400).json('Não foi possível cadastrar o réptil no banco de dados');
+    }
+    
 })
 
 new DatabaseModel().testeConexao().then((resbd) => {
