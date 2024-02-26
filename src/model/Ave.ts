@@ -86,8 +86,8 @@ export class Ave extends Animal {
     /**
      * Cadastra um objeto do tipo Ave no banco de dados
      * 
-     * @param ave : Objeto do tipo Ave
-     * @returns true caso sucesso, false caso erro
+     * @param ave Objeto do tipo Ave
+     * @returns **true** caso sucesso, **false** caso erro
      */
     static async cadastrarAve(ave: Ave): Promise<any> {
         try {
@@ -96,7 +96,7 @@ export class Ave extends Animal {
             // Faz a query de insert no banco de dados, passando para o banco as informações do objeto recebibo como parâmetro pela função
             await database.query(`INSERT INTO ave (nome, idade, genero, envergadura)
                 VALUES
-                ('${ave.getNome().toUpperCase()}', ${ave.getIdade()}, '${ave.getGenero().toUpperCase()}', ${ave.getEnvergadura()});
+                ('${ave.getNome().toUpperCase()}', ${ave.getIdade()}, '${ave.getGenero().toUpperCase()}', ${ave.getEnvergadura()})
             `)
             // Testa para ter certeza que foi possível inserir os dados no banco
             .then((result) => {

@@ -7,7 +7,6 @@ import { DatabaseModel } from "./model/DatabaseModel";
 import { Reptil } from "./model/Reptil";
 import { Mamifero } from "./model/Mamifero";
 import { Ave } from "./model/Ave";
-import { getEnabledCategories } from "trace_events";
 
 const server = express();
 const port: number = 3000;

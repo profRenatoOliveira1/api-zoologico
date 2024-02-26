@@ -14,23 +14,23 @@ export class Mamifero extends Animal {
     /**
      * A raça do mamífero.
      */
-    private raca: string;
+    private especie: string;
 
     /**
      * Cria uma nova instância de Mamifero.
      * 
-     * @param _raca A raça do mamífero.
+     * @param _especie A raça do mamífero.
      * @param _nome O nome do mamífero.
      * @param _idade A idade do mamífero.
      * @param _genero O gênero do mamífero.
      */
-    constructor(_raca: string,
+    constructor(_especie: string,
                 _nome: string,
                 _idade: number,
                 _genero: string) {
         // Chamada ao construtor da classe pai (Animal) para definir nome, idade e gênero
         super(_nome, _idade, _genero);
-        this.raca = _raca;
+        this.especie = _especie;
     }
 
     /**
@@ -38,8 +38,8 @@ export class Mamifero extends Animal {
      * 
      * @returns A raça do mamífero.
      */
-    public getRaca(): string {
-        return this.raca;
+    public getEspecie(): string {
+        return this.especie;
     }
 
     /**
@@ -47,8 +47,8 @@ export class Mamifero extends Animal {
      * 
      * @param raca A raça a ser atribuída ao mamífero.
      */
-    public setRaca(raca: string): void {
-        this.raca = raca;
+    public setEspecie(raca: string): void {
+        this.especie = raca;
     }
 
     /**
@@ -84,8 +84,8 @@ export class Mamifero extends Animal {
     /**
      * Cadastra um objeto do tipo Mamifero no banco de dados
      * 
-     * @param mamifero : Objeto do tipo Mamifero
-     * @returns true caso sucesso, false caso erro
+     * @param mamifero Objeto do tipo Mamifero
+     * @returns **true** caso sucesso, **false** caso erro
      */
     static async cadastrarMamifero(mamifero: Mamifero): Promise<any> {
         try {
@@ -94,7 +94,7 @@ export class Mamifero extends Animal {
             // Faz a query de insert no banco de dados, passando para o banco as informações do objeto recebibo como parâmetro pela função
             await database.query(`INSERT INTO mamifero (nome, idade, genero, raca)
                 VALUES
-                ('${mamifero.getNome().toUpperCase()}', ${mamifero.getIdade()}, '${mamifero.getGenero().toUpperCase()}', '${mamifero.getRaca().toUpperCase()}');
+                ('${mamifero.getNome().toUpperCase()}', ${mamifero.getIdade()}, '${mamifero.getGenero().toUpperCase()}', '${mamifero.getEspecie().toUpperCase()}');
             `)
             // Testa para ter certeza que foi possível inserir os dados no banco
             .then((result) => {

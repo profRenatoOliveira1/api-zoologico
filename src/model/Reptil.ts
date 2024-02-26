@@ -82,8 +82,8 @@ export class Reptil extends Animal {
     /**
      * Cadastra um objeto do tipo Reptil no banco de dados
      * 
-     * @param reptil : Objeto do tipo Reptil
-     * @returns true caso sucesso, false caso erro
+     * @param reptil Objeto do tipo Reptil
+     * @returns **true** caso sucesso, **false** caso erro
      */
     static async cadastrarReptil(reptil: Reptil): Promise<any> {
         try {
