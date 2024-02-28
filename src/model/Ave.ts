@@ -61,25 +61,29 @@ export class Ave extends Animal {
     static async listarAves() {
         // Cria uma lista (array) vazia do tipo Ave
         const listaDeAves: Array<Ave> = [];
+
+        // Construção da query para selecionar as informações de um Ave
+        const querySelectAve = `SELECT Animal.idAnimal, Animal.nomeAnimal, Animal.idadeAnimal, Animal.generoAnimal, Ave.envergadura 
+                                    FROM Animal 
+                                    JOIN Ave ON Animal.idAnimal = Ave.idAve;`;
+
+
         try {
             // Faz a consulta no banco de dados e retorna o resultado para a variável queryReturn
-            const queryReturn = await database.query(`SELECT * FROM  ave`);
+            const queryReturn = await database.query(querySelectAve);
             // Percorre todas as linhas da queryReturn e acessa cada objeto individualmente
             queryReturn.rows.forEach(ave => {
-                // Coloca o objeto dentro da lista de mamiferos
+                // Coloca o objeto dentro da lista de Aves
                 listaDeAves.push(ave);
             });
 
-            // só pra testar se a lista veio certa do banco
-            console.log(listaDeAves);
-
-            // retorna a lista de mamiferos para quem chamou a função
+            // retorna a lista de Aves para quem chamou a função
             return listaDeAves;
         } catch (error) {
             // Caso dê algum erro na query do banco, é lançado o erro para quem chamou a função
             console.log('Erro no modelo');
             console.log(error);
-            return "error";
+            return "error, verifique os logs do servidor";
         }
     }
 
@@ -90,27 +94,45 @@ export class Ave extends Animal {
      * @returns **true** caso sucesso, **false** caso erro
      */
     static async cadastrarAve(ave: Ave): Promise<any> {
+        // Cria uma variável do tipo booleano para guardar o status do resultado da query
+        let insertResult = false;
+
         try {
-            // Cria uma variável do tipo booleano para guardar o status do resultado da query
-            let insertResult = false;
+            // Construção da query para inserir as informações de um Ave. A query irá retornar o ID gerado para o animal pelo banco de dados
+            const queryInsertAnimal = `INSERT INTO animal (nomeAnimal, idadeAnimal, generoAnimal) 
+                                        VALUES 
+                                        ('${ave.getNomeAnimal().toUpperCase()}', ${ave.getIdadeAnimal()}, '${ave.getGeneroAnimal().toUpperCase()}')
+                                        RETURNING idAnimal;`;
+
             // Faz a query de insert no banco de dados, passando para o banco as informações do objeto recebibo como parâmetro pela função
-            await database.query(`INSERT INTO ave (nome, idade, genero, envergadura)
-                VALUES
-                ('${ave.getNome().toUpperCase()}', ${ave.getIdade()}, '${ave.getGenero().toUpperCase()}', ${ave.getEnvergadura()})
-            `)
-            // Testa para ter certeza que foi possível inserir os dados no banco
-            .then((result) => {
-                // Verifica se o número de linhas adicionadas no banco foi maior que zero
-                if (result.rowCount != 0) {
-                    // Se o número de linhas for maior que zero, a operação deu certo e o valor VERDADEIRO é atribuido na variável
-                    insertResult = true;
-                }
-            });
+            await database.query(queryInsertAnimal)
+                // Testa para ter certeza que foi possível inserir os dados no banco
+                .then(async (result) => {
+                    const idAnimal = result.rows[0].idanimal;
+                    // Preparando a query para inserir a raça do mamífero no banco de dados
+                    const queryInsertAve = `INSERT INTO ave (idAve, envergadura)
+                                                VALUES
+                                                (${idAnimal}, ${ave.getEnvergadura()})`;
+
+                    // Faz a query de insert da raça do mamífero no banco de dados
+                    await database.query(queryInsertAve)
+
+                        // Testa para ter certeza que foi possível inserir os dados no banco
+                        .then((resultAve) => {
+                            if (resultAve.rowCount != 0) {
+                                // Se o número de linhas for diferente de zero, a operação deu certo e o valor VERDADEIRO é atribuido na variável
+                                insertResult = true;
+                            }
+                        });
+                });
             // Retorna VERDADEIRO para quem chamou a função, indicando que a operação foi realizada com sucesso
             return insertResult;
         } catch (error) {
+            // Imprime o erro no console
+            console.log(error);
+
             // Caso a inserção no banco der algum erro, é restorno o valor FALSO para quem chamou a função
-            return error;
+            return insertResult;
         }
     }
 }
