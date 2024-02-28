@@ -7,15 +7,15 @@ CREATE TABLE Animal (idAnimal SERIAL NOT NULL PRIMARY KEY,
 					generoAnimal VARCHAR(15) NOT NULL);
 					
 CREATE TABLE Ave (idAve INT,
-				 envergadura FLOAT,
+				 envergadura FLOAT NOT NULL,
 				 FOREIGN KEY (idAve) REFERENCES Animal(idAnimal));
 				 
 CREATE TABLE Mamifero (idMamifero INT,
-				 especie VARCHAR(50),
+				 especie VARCHAR(50) NOT NULL,
 				 FOREIGN KEY (idMamifero) REFERENCES Animal(idAnimal));
 				 
 CREATE TABLE Reptil (idReptil INT,
-				 tipoDeEscamas VARCHAR(50),
+				 tipoDeEscamas VARCHAR(50) NOT NULL,
 				 FOREIGN KEY (idReptil) REFERENCES Animal(idAnimal));
 				 
 CREATE TABLE Habitat (idHabitat SERIAL NOT NULL PRIMARY KEY,
