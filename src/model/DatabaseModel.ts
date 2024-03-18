@@ -29,13 +29,13 @@ export class DatabaseModel {
     constructor() {
         // Configuração padrão para conexão com o banco de dados
         this._config = {
-            user: 'postgres',
-            host: 'localhost',
-            database: 'zoologico-test',
-            password: 'admin',
-            port: 5432,
-            max: 10,
-            idleTimoutMillis: 10000
+            user: process.env.POSTGRES_USER,
+            host: process.env.POSTGRES_HOST,
+            database: process.env.POSTGRES_DB,
+            password: process.env.POSTGRES_PASSWORD,
+            port: process.env.POSTGRES_PORT,
+            max: 10, // Pool max size
+            idleTimeoutMillis: 10000
         }
 
         // Inicialização do pool de conexões
