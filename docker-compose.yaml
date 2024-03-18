@@ -11,22 +11,22 @@ services:
       - "3000"
     ports:
       - "3000:3000"
-    # depends_on:
-    #   - postgres
+    depends_on:
+      - postgres
 
-#   postgres:
-#     image: postgres:latest
-#     container_name: postgres_db
-#     restart: always
-#     ports:
-#       - "5434:5432"
-#     environment:
-#       POSTGRES_USER: admin
-#       POSTGRES_PASSWORD: Adm1n@23
-#       POSTGRES_DB: zoologico
-#     volumes:
-#       - postgres-data:/var/lib/postgresql/data
-#       - ./docs/sql/:/docker-entrypoint-initdb.d
-#     command: ["postgres", "-c", "max_connections=1000"]
-# volumes:
-#   postgres-data:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+    ports:
+      - "5499:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: Adm1n@23
+      POSTGRES_DB: zoologico
+    volumes:
+      - Y:\\docker-volumes\\postgres-dsi\\zoologico-dev:/var/lib/postgresql/data
+      - ./docs/sql:/docker-entrypoint-initdb.d
+    command: [ "postgres", "-c", "max_connections=1000" ]
+volumes:
+  postgres-data:
